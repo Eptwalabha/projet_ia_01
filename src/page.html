@@ -6,21 +6,67 @@
 		
 		<script type="text/javascript" src="./class_graph.js" charset="utf-8"></script>
 		<script type="text/javascript" src="./class_dot.js" charset="utf-8"></script>
+		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+		<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+		<link rel="stylesheet" href="./css/style_base.min.css" />
 		
 	</head>
 	<body>
 		<h2>Test Canvas</h2>
 		<div>
-			<canvas id="canvas_page" height="200" width="200">
-			</canvas>
+			<canvas id="canvas_page" width="200" height="200" ></canvas>
+		</div>
+		<div>
+			<div onclick="refreshPopulation();" >Nouvelle population</div>
+			d&eacute;placer l'axe Z (d'avant en arri&egrave;re)<div id="slider"></div>
+<!-- 			axe X: <select onchange="changeAxis( $( this ) );" data-axis="0" > -->
+<!-- 				<option value="0" selected>dimension 1</option> -->
+<!-- 				<option value="1">dimension 2</option> -->
+<!-- 				<option value="2">dimension 3</option> -->
+<!-- 			</select><br /> -->
+<!-- 			axe Y: <select onchange="changeAxis( $( this ) );" data-axis="1" > -->
+<!-- 				<option value="0">dimension 1</option> -->
+<!-- 				<option value="1" selected>dimension 2</option> -->
+<!-- 				<option value="2">dimension 3</option> -->
+<!-- 			</select><br /> -->
+<!-- 			axe Z: <select onchange="changeAxis( $( this ) );" data-axis="2" > -->
+<!-- 				<option value="0">dimension 1</option> -->
+<!-- 				<option value="1">dimension 2</option> -->
+<!-- 				<option value="2" selected>dimension 3</option> -->
+<!-- 			</select><br /> -->
 		</div>
 		<script>
-			
+		
 			var canvas = document.getElementById( "canvas_page" );
-			var panel = new PanelGraph( 50, 50, canvas );
-			panel.createRandomPopulation( 50 );
-			var time = panel.drawGraph();
-			console.log( "temps d'execution = " + time + "ms" );
+			var panel = new PanelGraph( 200, 200, 200, canvas );
+		
+			$( document ).ready( function() {
+				
+				panel.createRandomPopulation( 20 );
+				var time = panel.drawGraph();
+				console.log( "temps d'execution = " + time + "ms" );
+				
+				$( "#slider" ).slider( {
+					max : 100,
+					slide : function( event, ui ) {
+						
+						panel.setZCursorValue( ui.value );
+						var time = panel.drawGraph();
+					}
+				} );
+			} );
+			
+			function refreshPopulation() {
+				panel.createRandomPopulation( 50 );
+				panel.drawGraph();
+			}
+			
+			function changeAxis( elem ) {
+				
+				var n = elem.data( "axis" );
+				var dimension = elem.find( "option:selected" ).val();
+				panel.setDimensionAsAxis( n, dimension );
+			}
 			
 		</script>
 	</body>
