@@ -8,7 +8,7 @@ function DotGraph() {
 	};
 	
 	this.getValueOfADimension = function( dim ) {
-		this.values[ dim ];
+		return this.values[ dim ];
 	};
 	
 	this.setColor = function( color ) {

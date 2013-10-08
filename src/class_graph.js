@@ -61,8 +61,8 @@ function PanelGraph( x_axis, y_axis, canvas ) {
 		for( var i = 0; i < nbr; i++ ) {
 			
 			var dot = new DotGraph();
-			dot.setValueForADimension( 0, Math.random()*50 );
-			dot.setValueForADimension( 1, Math.random()*50 );
+			dot.setValueForADimension( 0, Math.random() * 50 );
+			dot.setValueForADimension( 1, Math.random() * 50 );
 			var r =  Math.round( Math.random() * 255 );
 			var g =  Math.round( Math.random() * 255 );
 			var b =  Math.round( Math.random() * 255 );
@@ -108,14 +108,24 @@ function PanelGraph( x_axis, y_axis, canvas ) {
 			}
 		}
 		
-		for ( dot in this.dots ) {
-			this.drawDotCross( dot );
+		for ( var i = 0, size = this.dots.length; i < size; i++ ) {
+			this.drawDotCross( this.dots[ i ], context );
 		}
 		
 		return date.getMilliseconds() - start;
 	};
 	
-	this.drawDotCross = function( dot ) {
-		// TODO
+	this.drawDotCross = function( dot, context ) {
+		
+		var posx = ( dot.getValueOfADimension( 0 ) * this.canvas.width ) / this.x_axis;
+		var posy = this.canvas.height - ( dot.getValueOfADimension( 1 ) * this.canvas.height ) / this.y_axis;
+		
+		context.strokeStyle = "#000000";
+		context.beginPath();
+		context.moveTo( posx - 5, posy );
+		context.lineTo( posx + 5, posy );
+		context.moveTo( posx, posy - 5 );
+		context.lineTo( posx, posy + 5 );
+		context.stroke();
 	};
 };
