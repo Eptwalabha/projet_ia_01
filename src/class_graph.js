@@ -61,8 +61,8 @@ function PanelGraph( x_axis, y_axis, canvas ) {
 		for( var i = 0; i < nbr; i++ ) {
 			
 			var dot = new DotGraph();
-			dot.setValueForADimension( 0, Math.random() * 50 );
-			dot.setValueForADimension( 1, Math.random() * 50 );
+			dot.setValueForADimension( 0, Math.round( ( Math.random() * 50 ) * 100 ) / 100 );
+			dot.setValueForADimension( 1, Math.round( ( Math.random() * 50 ) * 100 ) / 100 );
 			var r =  Math.round( Math.random() * 255 );
 			var g =  Math.round( Math.random() * 255 );
 			var b =  Math.round( Math.random() * 255 );
@@ -79,8 +79,7 @@ function PanelGraph( x_axis, y_axis, canvas ) {
 	
 	this.drawGraph = function() {
 		
-		var date = new Date();
-		var start = date.getMilliseconds();
+		var start = new Date();
 		
 		var xsize = this.canvas.width;
 		var ysize = this.canvas.height;
@@ -112,13 +111,15 @@ function PanelGraph( x_axis, y_axis, canvas ) {
 			this.drawDotCross( this.dots[ i ], context );
 		}
 		
-		return date.getMilliseconds() - start;
+		var end = new Date();
+		return ( end.getTime() - start.getTime() );
 	};
 	
 	this.drawDotCross = function( dot, context ) {
 		
 		var posx = ( dot.getValueOfADimension( 0 ) * this.canvas.width ) / this.x_axis;
 		var posy = this.canvas.height - ( dot.getValueOfADimension( 1 ) * this.canvas.height ) / this.y_axis;
+		// var txt = "(" + posx + "," + posy + ")";
 		
 		context.strokeStyle = "#000000";
 		context.beginPath();
@@ -127,5 +128,6 @@ function PanelGraph( x_axis, y_axis, canvas ) {
 		context.moveTo( posx, posy - 5 );
 		context.lineTo( posx, posy + 5 );
 		context.stroke();
+		// context.strokeText( txt, posx + 7, posy - 5 );
 	};
 };
