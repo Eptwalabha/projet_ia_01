@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="fr">
+	<head>
+		<meta charset="utf-8">
+		<title>Titre</title>
+		
+		<script type="text/javascript" src="./class_graph.js" charset="utf-8"></script>
+		<script type="text/javascript" src="./class_dot.js" charset="utf-8"></script>
+		
+	</head>
+	<body>
+		<h2>Test Canvas</h2>
+		<div>
+			<canvas id="canvas_page" height="300" width="300">
+			</canvas>
+		</div>
+		<script>
+			
+			var canvas = document.getElementById( "canvas_page" );
+			var panel = new PanelGraph( 50, 50, canvas );
+			panel.createRandomPopulation( 50 );
+			var time = panel.drawGraph();
+			console.log( "temps d'execution = " + time )
+			
+		</script>
+	</body>
+</html>
